@@ -79,4 +79,5 @@ const serverModel = new Schema(
   }
 )
 
-export default mongoose.model('Server', serverModel)
+const ServerModel = mongoose.model('Server', serverModel)
+export default ServerModel

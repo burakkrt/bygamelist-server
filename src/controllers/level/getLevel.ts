@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
-import ServerModel from '../../models/serverModel'
+import LevelModel from '../../models/levelModel'
 import * as defaultMetas from '../../constants/defaultMetas'
 
-const getServer = async (req: Request, res: Response) => {
+const getLevel = async (req: Request, res: Response) => {
   const pageSize =
     parseInt(req.query.pageSize as string) || defaultMetas.DEFAULT_PAGE_SIZE
   const page = parseInt(req.query.page as string) || defaultMetas.DEFAULT_PAGE
@@ -10,16 +10,16 @@ const getServer = async (req: Request, res: Response) => {
   const sortOrder = req.query.sortOrder?.toString() === 'desc' ? -1 : 1
 
   try {
-    const total = await ServerModel.countDocuments()
+    const total = await LevelModel.countDocuments()
 
-    const servers = await ServerModel.find()
+    const levels = await LevelModel.find()
       .sort({ [sortField]: sortOrder })
       .limit(pageSize)
       .skip((page - 1) * pageSize)
 
     res.status(200).json({
       success: true,
-      data: servers,
+      data: levels,
       meta: {
         total,
         page,
@@ -38,4 +38,4 @@ const getServer = async (req: Request, res: Response) => {
   }
 }
 
-export { getServer }
+export { getLevel }

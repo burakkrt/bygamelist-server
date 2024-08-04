@@ -2,6 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import serverRouter from './routes/serverRoute'
+import levelRoute from './routes/levelRoute'
 
 // Ortam değişkenini kontrol et ve doğru .env dosyasını yükle
 const envFile =
@@ -29,6 +30,7 @@ mongoose
 
     // Yönlendirmeler
     app.use('/v1/server', serverRouter)
+    app.use('/v1/level', levelRoute)
 
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`)

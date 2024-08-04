@@ -64,23 +64,12 @@ const createServer = async (req: Request, res: Response) => {
       data: [savedServer],
     })
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).json({
-        success: false,
-        error: {
-          message: error.message,
-        },
-        data: [],
-      })
-    } else {
-      res.status(500).json({
-        success: false,
-        error: {
-          message: 'An unknown error occurred',
-        },
-        data: [],
-      })
-    }
+    console.error('Error : ', error)
+
+    res.status(500).json({
+      success: false,
+      message: error instanceof Error ? error.message : 'An unknown error occurred',
+    })
   }
 }
 
