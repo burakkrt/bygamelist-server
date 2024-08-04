@@ -11,7 +11,6 @@ const roleSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'RoleEvent',
       required: true,
-      unique: true,
     },
   ],
 })
