@@ -16,5 +16,5 @@
     "noEmitOnError": true // Hata varsa çıktı üretme
   },
   "include": ["src/**/*.ts"], // Derlemeye dahil edilen dosyalar
-  "exclude": ["node_modules"] // Hariç tutulan dosyalar
+  "exclude": ["node_modules", "dist"] // Hariç tutulan dosyalar
 }

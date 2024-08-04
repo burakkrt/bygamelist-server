@@ -21,7 +21,7 @@ mongodb_1.MongoClient.connect(mongoUrl)
         res.send('Hello, world!');
     });
     app.listen(port, () => {
-        console.log(`Server is running on port2 ${port}`);
+        console.log(`Server is running on port ${port}`);
     });
 })
     .catch((error) => console.error(error));

@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "nodemon 'src/**/*.ts'"
+    "dev": "nodemon --exec ts-node src/index.ts"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
@@ -19,6 +19,7 @@
     "@types/node": "^22.1.0",
     "nodemon": "^3.1.4",
     "prettier": "3.3.3",
+    "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
   },
   "author": "bygamelist developers",
