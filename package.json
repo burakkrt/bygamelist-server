@@ -1,0 +1,29 @@
+{
+  "name": "bygamelist-server",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "keywords": [],
+  "author": "bygamelist developers",
+  "license": "ISC",
+  "description": "Bygamelist is a platform that helps users find the servers they are looking for by listing the PVP servers of the most popular games.",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.19.2",
+    "mongodb": "^4.10.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/mongodb": "^4.0.7",
+    "@types/node": "^22.1.0",
+    "nodemon": "^3.1.4",
+    "prettier": "3.3.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  }
+}

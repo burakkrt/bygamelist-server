@@ -1,0 +1,60 @@
+# Node modules
+node_modules/
+
+# Build outputs
+dist/
+build/
+out/
+
+# Logs
+logs/
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE and editor specific files
+.vscode/
+.idea/
+*.swp
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Environment variable files
+.env
+.env.local
+.env.*.local
+
+# Lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Static files
+public/
+
+# Ignore all markdown files
+*.md
+
+# Ignore all images
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.ico
+
+# Ignore all minified files
+*.min.js
+*.min.css
+
+# Ignore all CSV files
+*.csv
+
+# Ignore all patch files
+*.patch
+
+# Folder template
+.fttemplates
