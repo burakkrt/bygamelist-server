@@ -10,9 +10,9 @@ dotenv.config({ path: envFile })
 console.log(`Using environment file: ${envFile}`)
 
 const app = express()
-const port = process.env.PORT || 3000
-const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost:27017'
-const dbName = process.env.DB_NAME || 'mydatabase'
+const port = process.env.PORT || 5000
+const mongoUrl = process.env.MONGO_URL || ''
+const dbName = process.env.DB_NAME || ''
 
 MongoClient.connect(mongoUrl)
   .then((client) => {
