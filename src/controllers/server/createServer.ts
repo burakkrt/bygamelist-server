@@ -4,12 +4,13 @@ import ServerModel from '../../models/serverModel'
 const createServer = async (req: Request, res: Response) => {
   const { title } = req.body
 
-  if (title) {
-    return res.status(400).json({ message: 'Title is required' })
+  if (!title) {
+    return res.status(400).json({ message: 'The title field cannot be left blank.' })
   }
 
   try {
-    res.send({ title })
+    const server = await ServerModel.create({ title })
+    res.status(201).json(server)
   } catch (error) {
     // Hata durumunda hata yanıtı döndür
     console.error(error)

@@ -1,5 +1,5 @@
 import express from 'express'
-import { MongoClient } from 'mongodb'
+import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import serverRouter from './routes/serverRoute'
 
@@ -22,9 +22,9 @@ const mongoUrl = `mongodb+srv://${mongoUsername}:${mongoPassword}@${mongoCluster
 app.use(express.json()) // JSON formatındaki gövde verilerini işlemek için
 app.use(express.urlencoded({ extended: true })) // URL encoded verileri işlemek için
 
-MongoClient.connect(mongoUrl)
-  .then((client) => {
-    const db = client.db(dbName)
+mongoose
+  .connect(mongoUrl)
+  .then(() => {
     console.log(`Connected to database: ${dbName}`)
 
     // Yönlendirmeler
@@ -34,4 +34,7 @@ MongoClient.connect(mongoUrl)
       console.log(`Server is running on port ${port}`)
     })
   })
-  .catch((error) => console.error(error))
+  .catch((error) => {
+    console.error('Error connecting to the database:', error)
+    process.exit(1) // Bağlantı hatası durumunda uygulamayı durdur
+  })
