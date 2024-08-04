@@ -1,29 +1,49 @@
-import mongoose, { Schema } from 'mongoose'
+import mongoose, { Document, Schema } from 'mongoose'
+import bcrypt from 'bcrypt'
 
-const userSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
+export interface IUser extends Document {
+  _id: string
+  name: string
+  surname: string
+  password: string
+  email: string
+  phoneNumber?: string
+  comparePassword(candidatePassword: string): Promise<boolean>
+}
+const userSchema = new Schema<IUser>(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+    surname: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    phoneNumber: {
+      type: String,
+      default: '',
+    },
   },
-  surname: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  phoneNumber: {
-    type: String,
-    unique: true,
-  },
-  role: {
-    type: Schema.Types.ObjectId,
-    ref: 'Role',
-    required: true,
-  },
-})
+  {
+    timestamps: true,
+  }
+)
 
-const userModel = mongoose.model('User', userSchema)
-export default userModel
+userSchema.methods.comparePassword = async function (
+  candidatePassword: string
+): Promise<boolean> {
+  return await bcrypt.compare(candidatePassword, this.password)
+}
+
+const UserModel = mongoose.model<IUser>('User', userSchema)
+
+export default UserModel

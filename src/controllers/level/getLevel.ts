@@ -1,8 +1,9 @@
 import { Request, Response } from 'express'
 import LevelModel from '../../models/levelModel'
 import * as defaultMetas from '../../constants/defaultMetas'
+import { ErrorResponse, SuccessResponse } from '../../constants/types'
 
-const getLevel = async (req: Request, res: Response) => {
+const getLevel = async (req: Request, res: Response<SuccessResponse | ErrorResponse>) => {
   const pageSize =
     parseInt(req.query.pageSize as string) || defaultMetas.DEFAULT_PAGE_SIZE
   const page = parseInt(req.query.page as string) || defaultMetas.DEFAULT_PAGE
@@ -17,7 +18,7 @@ const getLevel = async (req: Request, res: Response) => {
       .limit(pageSize)
       .skip((page - 1) * pageSize)
 
-    res.status(200).json({
+    const response: SuccessResponse = {
       success: true,
       data: levels,
       meta: {
@@ -27,7 +28,9 @@ const getLevel = async (req: Request, res: Response) => {
         totalPages: Math.ceil(total / pageSize),
         timestamp: new Date().toISOString(),
       },
-    })
+    }
+
+    res.status(200).json(response)
   } catch (error) {
     console.error('Error : ', error)
 

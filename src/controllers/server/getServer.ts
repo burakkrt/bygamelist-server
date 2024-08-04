@@ -1,8 +1,12 @@
 import { Request, Response } from 'express'
 import ServerModel from '../../models/serverModel'
 import * as defaultMetas from '../../constants/defaultMetas'
+import { ErrorResponse, SuccessResponse } from '../../constants/types'
 
-const getServer = async (req: Request, res: Response) => {
+const getServer = async (
+  req: Request,
+  res: Response<SuccessResponse | ErrorResponse>
+) => {
   const pageSize =
     parseInt(req.query.pageSize as string) || defaultMetas.DEFAULT_PAGE_SIZE
   const page = parseInt(req.query.page as string) || defaultMetas.DEFAULT_PAGE
@@ -17,7 +21,7 @@ const getServer = async (req: Request, res: Response) => {
       .limit(pageSize)
       .skip((page - 1) * pageSize)
 
-    res.status(200).json({
+    const response: SuccessResponse = {
       success: true,
       data: servers,
       meta: {
@@ -27,7 +31,9 @@ const getServer = async (req: Request, res: Response) => {
         totalPages: Math.ceil(total / pageSize),
         timestamp: new Date().toISOString(),
       },
-    })
+    }
+
+    res.status(200).json(response)
   } catch (error) {
     console.error('Error : ', error)
 

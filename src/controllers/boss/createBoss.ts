@@ -1,13 +1,12 @@
 import { Request, Response } from 'express'
 import { body, validationResult } from 'express-validator'
-import RoleModel from '../../models/roleModel'
+import BossModel from '../../models/bossModel'
 
-const roleValidationRules = () => [
+const bossValidationRules = () => [
   body('name').notEmpty().withMessage('Name is required'),
-  body('roles').notEmpty().withMessage('Roles is required'),
 ]
 
-const createRole = async (req: Request, res: Response) => {
+const createBoss = async (req: Request, res: Response) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({
@@ -20,34 +19,25 @@ const createRole = async (req: Request, res: Response) => {
   }
 
   try {
-    const { name, roles } = req.body
+    const { name } = req.body
 
-    const uniqueRoles = [...new Set(roles)]
-    if (uniqueRoles.length !== roles.length) {
-      return res.status(400).json({
-        success: false,
-        message: 'Roles array contains duplicate values',
-      })
-    }
-
-    const existing = await RoleModel.findOne({ name })
+    const existing = await BossModel.findOne({ name })
     if (existing) {
       return res.status(409).json({
         success: false,
-        message: 'A role with this name already exists',
+        message: 'A efsun with this name already exists',
       })
     }
 
-    const newRole = new RoleModel({
+    const newBoss = new BossModel({
       name,
-      roles,
     })
 
-    const savedRole = await newRole.save()
+    const savedBoss = await newBoss.save()
 
     res.status(201).json({
       success: true,
-      data: [savedRole],
+      data: [savedBoss],
     })
   } catch (error) {
     console.error('Error : ', error)
@@ -61,4 +51,4 @@ const createRole = async (req: Request, res: Response) => {
   }
 }
 
-export { createRole, roleValidationRules }
+export { createBoss, bossValidationRules }

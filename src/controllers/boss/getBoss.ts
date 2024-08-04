@@ -1,8 +1,9 @@
 import { Request, Response } from 'express'
-import UserModel from '../../models/userModel'
+import BossModel from '../../models/bossModel'
 import * as defaultMetas from '../../constants/defaultMetas'
+import { ErrorResponse, SuccessResponse } from '../../constants/types'
 
-const getUser = async (req: Request, res: Response) => {
+const getBoss = async (req: Request, res: Response<SuccessResponse | ErrorResponse>) => {
   const pageSize =
     parseInt(req.query.pageSize as string) || defaultMetas.DEFAULT_PAGE_SIZE
   const page = parseInt(req.query.page as string) || defaultMetas.DEFAULT_PAGE
@@ -10,16 +11,16 @@ const getUser = async (req: Request, res: Response) => {
   const sortOrder = req.query.sortOrder?.toString() === 'desc' ? -1 : 1
 
   try {
-    const total = await UserModel.countDocuments()
+    const total = await BossModel.countDocuments()
 
-    const users = await UserModel.find()
+    const bosses = await BossModel.find()
       .sort({ [sortField]: sortOrder })
       .limit(pageSize)
       .skip((page - 1) * pageSize)
 
-    res.status(200).json({
+    const response: SuccessResponse = {
       success: true,
-      data: users,
+      data: bosses,
       meta: {
         total,
         page,
@@ -27,7 +28,9 @@ const getUser = async (req: Request, res: Response) => {
         totalPages: Math.ceil(total / pageSize),
         timestamp: new Date().toISOString(),
       },
-    })
+    }
+
+    res.status(200).json(response)
   } catch (error) {
     console.error('Error : ', error)
 
@@ -40,4 +43,4 @@ const getUser = async (req: Request, res: Response) => {
   }
 }
 
-export { getUser }
+export { getBoss }
