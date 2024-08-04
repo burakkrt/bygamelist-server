@@ -1,21 +1,87 @@
 import { Request, Response } from 'express'
+import { body, validationResult } from 'express-validator'
 import ServerModel from '../../models/serverModel'
 
-const createServer = async (req: Request, res: Response) => {
-  const { title } = req.body
+const serverValidationRules = () => [
+  body('name').notEmpty().withMessage('Name is required'),
+  body('level').notEmpty().withMessage('Level is required'),
+  body('openingDate').notEmpty().withMessage('openingDate is required'),
+  body('autoHunt').notEmpty().withMessage('autoHunt is required'),
+  body('dropClient').notEmpty().withMessage('dropClient is required'),
+]
 
-  if (!title) {
-    return res.status(400).json({ message: 'The title field cannot be left blank.' })
+const createServer = async (req: Request, res: Response) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(400).json({
+      success: false,
+      error: {
+        message: 'Validation error',
+        details: errors.array(),
+      },
+    })
   }
 
   try {
-    const server = await ServerModel.create({ title })
-    res.status(201).json(server)
+    const {
+      name,
+      level,
+      openingDate,
+      autoHunt,
+      autoBoss,
+      battlepass,
+      dropClient,
+      legalSale,
+      dolunayKdp,
+      simya,
+      kuleFarm,
+      team,
+      efsunlar,
+      bosses,
+    } = req.body
+
+    const newServer = new ServerModel({
+      name,
+      level,
+      openingDate,
+      autoHunt,
+      autoBoss,
+      battlepass,
+      dropClient,
+      legalSale,
+      dolunayKdp,
+      simya,
+      kuleFarm,
+      team,
+      efsunlar,
+      bosses,
+    })
+
+    const savedServer = await newServer.save()
+
+    res.status(201).json({
+      success: true,
+      data: [savedServer],
+    })
   } catch (error) {
-    // Hata durumunda hata yanıtı döndür
-    console.error(error)
-    res.status(500).json({ message: 'Server error', error })
+    if (error instanceof Error) {
+      res.status(500).json({
+        success: false,
+        error: {
+          message: error.message,
+        },
+        data: [],
+      })
+    } else {
+      res.status(500).json({
+        success: false,
+        error: {
+          message: 'An unknown error occurred',
+        },
+        data: [],
+      })
+    }
   }
 }
 
-export default createServer
+export { createServer, serverValidationRules }

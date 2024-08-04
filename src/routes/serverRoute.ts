@@ -1,10 +1,10 @@
 import { Router } from 'express'
 import getServer from '../controllers/server/getServer'
-import createServer from '../controllers/server/createServer'
+import { createServer, serverValidationRules } from '../controllers/server/createServer'
 
 const serverRoute = Router()
 
 serverRoute.get('/', getServer)
-serverRoute.post('/', createServer)
+serverRoute.post('/', serverValidationRules(), createServer)
 
 export default serverRoute
