@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
-import ServerModel from '../models/serverModel'
+import ServerModel from '../../models/serverModel'
 
-export const getServer = async (req: Request, res: Response) => {
+const getServer = async (req: Request, res: Response) => {
   try {
     // Tüm serverleri bul
     const servers = await ServerModel.find()
@@ -18,3 +18,5 @@ export const getServer = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Server error', error })
   }
 }
+
+export default getServer
