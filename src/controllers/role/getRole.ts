@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
-import LevelModel from '../../models/levelModel'
+import RoleModel from '../../models/roleModel'
 import * as defaultMetas from '../../constants/defaultMetas'
 
-const getLevel = async (req: Request, res: Response) => {
+const getRole = async (req: Request, res: Response) => {
   const pageSize =
     parseInt(req.query.pageSize as string) || defaultMetas.DEFAULT_PAGE_SIZE
   const page = parseInt(req.query.page as string) || defaultMetas.DEFAULT_PAGE
@@ -10,16 +10,16 @@ const getLevel = async (req: Request, res: Response) => {
   const sortOrder = req.query.sortOrder?.toString() === 'desc' ? -1 : 1
 
   try {
-    const total = await LevelModel.countDocuments()
+    const total = await RoleModel.countDocuments()
 
-    const levels = await LevelModel.find()
+    const roles = await RoleModel.find()
       .sort({ [sortField]: sortOrder })
       .limit(pageSize)
       .skip((page - 1) * pageSize)
 
     res.status(200).json({
       success: true,
-      data: levels,
+      data: roles,
       meta: {
         total,
         page,
@@ -40,4 +40,4 @@ const getLevel = async (req: Request, res: Response) => {
   }
 }
 
-export { getLevel }
+export { getRole }

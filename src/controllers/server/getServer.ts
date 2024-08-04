@@ -33,7 +33,9 @@ const getServer = async (req: Request, res: Response) => {
 
     res.status(500).json({
       success: false,
-      message: error instanceof Error ? error.message : 'An unknown error occurred',
+      error: {
+        message: error instanceof Error ? error.message : 'An unknown error occurred',
+      },
     })
   }
 }

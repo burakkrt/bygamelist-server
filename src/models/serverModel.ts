@@ -18,7 +18,7 @@ const teamSchema = new mongoose.Schema({
   },
 })
 
-const serverModel = new Schema(
+const serverSchema = new Schema(
   {
     name: {
       type: String,
@@ -79,5 +79,5 @@ const serverModel = new Schema(
   }
 )
 
-const ServerModel = mongoose.model('Server', serverModel)
+const ServerModel = mongoose.model('Server', serverSchema)
 export default ServerModel

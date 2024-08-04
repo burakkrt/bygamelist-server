@@ -1,12 +1,13 @@
 import { Request, Response } from 'express'
 import { body, validationResult } from 'express-validator'
-import LevelModel from '../../models/levelModel'
+import RoleModel from '../../models/roleModel'
 
-const levelValidationRules = () => [
+const roleValidationRules = () => [
   body('name').notEmpty().withMessage('Name is required'),
+  body('roles').notEmpty().withMessage('Roles is required'),
 ]
 
-const createLevel = async (req: Request, res: Response) => {
+const createRole = async (req: Request, res: Response) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({
@@ -19,25 +20,34 @@ const createLevel = async (req: Request, res: Response) => {
   }
 
   try {
-    const { name } = req.body
+    const { name, roles } = req.body
 
-    const existing = await LevelModel.findOne({ name })
-    if (existing) {
-      return res.status(409).json({
+    const uniqueRoles = [...new Set(roles)]
+    if (uniqueRoles.length !== roles.length) {
+      return res.status(400).json({
         success: false,
-        message: 'A level with this name already exists',
+        message: 'Roles array contains duplicate values',
       })
     }
 
-    const newLevel = new LevelModel({
+    const existing = await RoleModel.findOne({ name })
+    if (existing) {
+      return res.status(409).json({
+        success: false,
+        message: 'A role with this name already exists',
+      })
+    }
+
+    const newRole = new RoleModel({
       name,
+      roles,
     })
 
-    const savedLevel = await newLevel.save()
+    const savedRole = await newRole.save()
 
     res.status(201).json({
       success: true,
-      data: [savedLevel],
+      data: [savedRole],
     })
   } catch (error) {
     console.error('Error : ', error)
@@ -51,4 +61,4 @@ const createLevel = async (req: Request, res: Response) => {
   }
 }
 
-export { createLevel, levelValidationRules }
+export { createRole, roleValidationRules }

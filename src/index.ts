@@ -3,6 +3,9 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import serverRouter from './routes/serverRoute'
 import levelRoute from './routes/levelRoute'
+import userRoute from './routes/userRoute'
+import roleRoute from './routes/roleRoute'
+import roleEventRoute from './routes/roleEventRoute'
 
 // Ortam değişkenini kontrol et ve doğru .env dosyasını yükle
 const envFile =
@@ -31,6 +34,9 @@ mongoose
     // Yönlendirmeler
     app.use('/v1/server', serverRouter)
     app.use('/v1/level', levelRoute)
+    app.use('/v1/user', userRoute)
+    app.use('/v1/role', roleRoute)
+    app.use('/v1/roleEvent', roleEventRoute)
 
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`)
