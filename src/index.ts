@@ -2,7 +2,10 @@ import express from 'express'
 import { MongoClient } from 'mongodb'
 import dotenv from 'dotenv'
 
-dotenv.config()
+// Ortam değişkenini kontrol et ve doğru .env dosyasını yükle
+const envFile =
+  process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development'
+dotenv.config({ path: envFile })
 
 const app = express()
 const port = process.env.PORT || 3000

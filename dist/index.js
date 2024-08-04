@@ -6,7 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const mongodb_1 = require("mongodb");
 const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
+// Ortam değişkenini kontrol et ve doğru .env dosyasını yükle
+const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development';
+dotenv_1.default.config({ path: envFile });
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
 const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost:27017';
