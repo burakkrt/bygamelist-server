@@ -6,6 +6,8 @@ import dotenv from 'dotenv'
 const envFile =
   process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development'
 dotenv.config({ path: envFile })
+// Hangi .env dosyasını kullandığını yazdır
+console.log(`Using environment file: ${envFile}`)
 
 const app = express()
 const port = process.env.PORT || 3000

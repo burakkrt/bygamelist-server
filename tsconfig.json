@@ -1,12 +1,20 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "commonjs",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "outDir": "./dist"
+    "target": "ES2020", // Derleme hedefi: ES2020
+    "module": "commonjs", // Modül sistemi: CommonJS (Node.js için)
+    "strict": true, // Sıkı tür kontrolü
+    "esModuleInterop": true, // ES modül uyumluluğu
+    "skipLibCheck": true, // Üçüncü taraf kütüphanelerinde tür kontrolünü atla
+    "outDir": "./dist", // Derlenmiş dosyaların çıkış dizini
+    "removeComments": true, // Yorumların çıkarılmasını sağlar
+    "baseUrl": "./", // Modül yollarının kök dizini
+    "paths": {
+      "@/*": ["src/*"] // Kısa yollar (aliased paths)
+    },
+    "resolveJsonModule": true, // JSON modüllerini içe aktar
+    "allowJs": true, // JavaScript dosyalarını içe aktarmaya izin ver
+    "noEmitOnError": true // Hata varsa çıktı üretme
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*.ts"], // Derlemeye dahil edilen dosyalar
+  "exclude": ["node_modules"] // Hariç tutulan dosyalar
 }
