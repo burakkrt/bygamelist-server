@@ -1,13 +1,9 @@
 import { Request, Response } from 'express'
-import { body, validationResult } from 'express-validator'
+import { validationResult } from 'express-validator'
 import BossModel from '../../models/bossModel'
 import { ErrorResponse, SuccessResponse } from '../../constants/types'
 
-const bossValidationRules = () => [
-  body('name').notEmpty().withMessage('Name is required'),
-]
-
-const createBoss = async (
+const updateBoss = async (
   req: Request,
   res: Response<SuccessResponse | ErrorResponse>
 ) => {
@@ -22,28 +18,30 @@ const createBoss = async (
     })
   }
 
-  try {
-    const { name } = req.body
+  const { id } = req.params
+  const { name } = req.body
 
-    const existing = await BossModel.findOne({ name })
-    if (existing) {
-      return res.status(409).json({
+  try {
+    const updatedBoss = await BossModel.findByIdAndUpdate(
+      id,
+      {
+        name,
+      },
+      { new: true }
+    )
+
+    if (!updatedBoss) {
+      return res.status(404).json({
         success: false,
         error: {
-          message: 'A boss with this name already exists',
+          message: 'Boss not found',
         },
       })
     }
 
-    const newBoss = new BossModel({
-      name,
-    })
-
-    const savedBoss = await newBoss.save()
-
-    res.status(201).json({
+    res.status(200).json({
       success: true,
-      data: [savedBoss],
+      data: [updatedBoss],
     })
   } catch (error) {
     console.error('Error : ', error)
@@ -57,4 +55,4 @@ const createBoss = async (
   }
 }
 
-export { createBoss, bossValidationRules }
+export { updateBoss }

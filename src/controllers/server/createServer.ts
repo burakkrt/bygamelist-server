@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { body, validationResult } from 'express-validator'
 import ServerModel from '../../models/serverModel'
+import { ErrorResponse, SuccessResponse } from '../../constants/types'
 
 const serverValidationRules = () => [
   body('name').notEmpty().withMessage('Name is required'),
@@ -10,7 +11,10 @@ const serverValidationRules = () => [
   body('dropClient').notEmpty().withMessage('dropClient is required'),
 ]
 
-const createServer = async (req: Request, res: Response) => {
+const createServer = async (
+  req: Request,
+  res: Response<SuccessResponse | ErrorResponse>
+) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({

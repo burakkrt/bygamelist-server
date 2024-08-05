@@ -16,5 +16,6 @@ export interface ErrorResponse {
   success: false
   error: {
     message: string
+    details?: Array<any>
   }
 }

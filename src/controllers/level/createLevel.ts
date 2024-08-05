@@ -1,12 +1,16 @@
 import { Request, Response } from 'express'
 import { body, validationResult } from 'express-validator'
 import LevelModel from '../../models/levelModel'
+import { ErrorResponse, SuccessResponse } from '../../constants/types'
 
 const levelValidationRules = () => [
   body('name').notEmpty().withMessage('Name is required'),
 ]
 
-const createLevel = async (req: Request, res: Response) => {
+const createLevel = async (
+  req: Request,
+  res: Response<SuccessResponse | ErrorResponse>
+) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({
@@ -25,7 +29,9 @@ const createLevel = async (req: Request, res: Response) => {
     if (existing) {
       return res.status(409).json({
         success: false,
-        message: 'A level with this name already exists',
+        error: {
+          message: 'A level with this name already exists',
+        },
       })
     }
 

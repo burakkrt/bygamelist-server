@@ -68,10 +68,12 @@ const serverSchema = new Schema(
         ref: 'Efsun',
       },
     ],
-    bosses: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Boss',
-    },
+    bosses: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Boss',
+      },
+    ],
   },
 
   {

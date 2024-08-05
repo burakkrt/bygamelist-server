@@ -20,6 +20,10 @@ const getServer = async (
       .sort({ [sortField]: sortOrder })
       .limit(pageSize)
       .skip((page - 1) * pageSize)
+      .populate('level')
+      .populate('bosses')
+      .populate('efsunlar')
+      .exec()
 
     const response: SuccessResponse = {
       success: true,

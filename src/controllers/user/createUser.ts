@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import { body, validationResult } from 'express-validator'
 import UserModel from '../../models/userModel'
+import { ErrorResponse, SuccessResponse } from '../../constants/types'
 
 const userValidationRules = () => [
   body('name').notEmpty().withMessage('Name is required'),
@@ -12,7 +13,10 @@ const userValidationRules = () => [
   body('role').notEmpty().withMessage('Role is required'),
 ]
 
-const createUser = async (req: Request, res: Response) => {
+const createUser = async (
+  req: Request,
+  res: Response<SuccessResponse | ErrorResponse>
+) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({
