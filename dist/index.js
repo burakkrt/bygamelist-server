@@ -7,6 +7,10 @@ const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const serverRoute_1 = __importDefault(require("./routes/serverRoute"));
+const levelRoute_1 = __importDefault(require("./routes/levelRoute"));
+const userRoute_1 = __importDefault(require("./routes/userRoute"));
+const efsunRoute_1 = __importDefault(require("./routes/efsunRoute"));
+const bossRoute_1 = __importDefault(require("./routes/bossRoute"));
 const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development';
 dotenv_1.default.config({ path: envFile });
 console.log(`Using environment file: ${envFile}`);
@@ -24,6 +28,10 @@ mongoose_1.default
     .then(() => {
     console.log(`Connected to database: ${dbName}`);
     app.use('/v1/server', serverRoute_1.default);
+    app.use('/v1/level', levelRoute_1.default);
+    app.use('/v1/user', userRoute_1.default);
+    app.use('/v1/efsun', efsunRoute_1.default);
+    app.use('/v1/boss', bossRoute_1.default);
     app.listen(port, () => {
         console.log(`Server is running on port ${port}`);
     });

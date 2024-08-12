@@ -1,6 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
+import cors from 'cors'
 import serverRouter from './routes/serverRoute'
 import levelRoute from './routes/levelRoute'
 import userRoute from './routes/userRoute'
@@ -23,6 +24,7 @@ const mongoCluster = process.env.MONGO_CLUSTER || ''
 const dbName = process.env.DB_NAME || ''
 const mongoUrl = `mongodb+srv://${mongoUsername}:${mongoPassword}@${mongoCluster}/${dbName}?retryWrites=true&w=majority`
 
+app.use(cors()) // CORS middleware'ini ekle
 app.use(express.json()) // JSON formatındaki gövde verilerini işlemek için
 app.use(express.urlencoded({ extended: true })) // URL encoded verileri işlemek için
 
