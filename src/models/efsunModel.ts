@@ -16,5 +16,19 @@ const efsunSchema = new mongoose.Schema(
   }
 )
 
+efsunSchema.set('toJSON', {
+  transform: (doc, ret) => {
+    delete ret.__v
+    return ret
+  },
+})
+
+efsunSchema.set('toObject', {
+  transform: (doc, ret) => {
+    delete ret.__v
+    return ret
+  },
+})
+
 const Efsun = mongoose.model('Efsun', efsunSchema)
 export default Efsun

@@ -38,6 +38,20 @@ const userSchema = new Schema<IUser>(
   }
 )
 
+userSchema.set('toJSON', {
+  transform: (doc, ret) => {
+    delete ret.__v
+    return ret
+  },
+})
+
+userSchema.set('toObject', {
+  transform: (doc, ret) => {
+    delete ret.__v
+    return ret
+  },
+})
+
 userSchema.methods.comparePassword = async function (
   candidatePassword: string
 ): Promise<boolean> {

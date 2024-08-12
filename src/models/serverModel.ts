@@ -81,5 +81,19 @@ const serverSchema = new Schema(
   }
 )
 
+serverSchema.set('toJSON', {
+  transform: (doc, ret) => {
+    delete ret.__v
+    return ret
+  },
+})
+
+serverSchema.set('toObject', {
+  transform: (doc, ret) => {
+    delete ret.__v
+    return ret
+  },
+})
+
 const ServerModel = mongoose.model('Server', serverSchema)
 export default ServerModel
