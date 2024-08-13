@@ -44,7 +44,7 @@ const createUser = async (
     const savedUser = await newUser.save()
 
     const token = jwt.sign({ userId: savedUser._id }, process.env.JWT_SECRET!, {
-      expiresIn: '1h',
+      expiresIn: process.env.TOKEN_VALIDITY_PERIOD || '1h',
     })
 
     res.status(201).json({
