@@ -59,7 +59,6 @@ const loginUser = async (
             name: user.name,
             surname: user.surname,
             email: user.email,
-            phoneNumber: user.phoneNumber,
           },
           token: token,
         },
