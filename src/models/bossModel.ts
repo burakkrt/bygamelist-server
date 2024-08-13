@@ -15,6 +15,8 @@ const bossSchema = new mongoose.Schema(
 
 bossSchema.set('toJSON', {
   transform: (doc, ret) => {
+    ret.id = ret._id
+    delete ret._id
     delete ret.__v
     return ret
   },
@@ -22,6 +24,8 @@ bossSchema.set('toJSON', {
 
 bossSchema.set('toObject', {
   transform: (doc, ret) => {
+    ret.id = ret._id
+    delete ret._id
     delete ret.__v
     return ret
   },

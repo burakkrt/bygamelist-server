@@ -55,7 +55,7 @@ const loginUser = async (
       data: [
         {
           user: {
-            _id: user._id,
+            id: user._id,
             name: user.name,
             surname: user.surname,
             email: user.email,

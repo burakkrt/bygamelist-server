@@ -18,6 +18,8 @@ const efsunSchema = new mongoose.Schema(
 
 efsunSchema.set('toJSON', {
   transform: (doc, ret) => {
+    ret.id = ret._id
+    delete ret._id
     delete ret.__v
     return ret
   },
@@ -25,6 +27,8 @@ efsunSchema.set('toJSON', {
 
 efsunSchema.set('toObject', {
   transform: (doc, ret) => {
+    ret.id = ret._id
+    delete ret._id
     delete ret.__v
     return ret
   },
