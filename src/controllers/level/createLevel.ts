@@ -14,10 +14,8 @@ const createLevel = async (
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({
-      success: false,
       error: {
-        message: 'Validation error',
-        details: errors.array(),
+        message: 'Girilen bilgiler eksik veya hatalı.',
       },
     })
   }
@@ -28,9 +26,8 @@ const createLevel = async (
     const existing = await LevelModel.findOne({ name })
     if (existing) {
       return res.status(409).json({
-        success: false,
         error: {
-          message: 'A level with this name already exists',
+          message: 'Zaten bu isimde veri mevcut.',
         },
       })
     }
@@ -42,16 +39,14 @@ const createLevel = async (
     const savedLevel = await newLevel.save()
 
     res.status(201).json({
-      success: true,
       data: [savedLevel],
     })
   } catch (error) {
     console.error('Error : ', error)
 
     res.status(500).json({
-      success: false,
       error: {
-        message: error instanceof Error ? error.message : 'An unknown error occurred',
+        message: error instanceof Error ? error.message : 'Bilinmeyen bir hata oluştu.',
       },
     })
   }

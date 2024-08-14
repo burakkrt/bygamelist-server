@@ -13,24 +13,21 @@ const getServerById = async (
 
     if (!server) {
       return res.status(404).json({
-        success: false,
         error: {
-          message: 'Server not found',
+          message: 'Sunucu bulunamadı.',
         },
       })
     }
 
     res.status(200).json({
-      success: true,
       data: [server],
     })
   } catch (error) {
     console.error('Error : ', error)
 
     res.status(500).json({
-      success: false,
       error: {
-        message: error instanceof Error ? error.message : 'An unknown error occurred',
+        message: error instanceof Error ? error.message : 'Bilinmeyen bir hata oluştu.',
       },
     })
   }

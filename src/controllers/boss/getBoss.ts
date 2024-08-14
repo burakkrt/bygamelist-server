@@ -19,7 +19,6 @@ const getBoss = async (req: Request, res: Response<SuccessResponse | ErrorRespon
       .skip((page - 1) * pageSize)
 
     const response: SuccessResponse = {
-      success: true,
       data: bosses,
       meta: {
         total,
@@ -35,9 +34,8 @@ const getBoss = async (req: Request, res: Response<SuccessResponse | ErrorRespon
     console.error('Error : ', error)
 
     res.status(500).json({
-      success: false,
       error: {
-        message: error instanceof Error ? error.message : 'An unknown error occurred',
+        message: error instanceof Error ? error.message : 'Bilinmeyen bir hata oluştu.',
       },
     })
   }

@@ -19,7 +19,6 @@ const getEfsun = async (req: Request, res: Response<SuccessResponse | ErrorRespo
       .skip((page - 1) * pageSize)
 
     const response: SuccessResponse = {
-      success: true,
       data: efsuns,
       meta: {
         total,
@@ -35,9 +34,8 @@ const getEfsun = async (req: Request, res: Response<SuccessResponse | ErrorRespo
     console.error('Error : ', error)
 
     res.status(500).json({
-      success: false,
       error: {
-        message: error instanceof Error ? error.message : 'An unknown error occurred',
+        message: error instanceof Error ? error.message : 'Bilinmeyen bir hata oluştu.',
       },
     })
   }

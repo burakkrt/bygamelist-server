@@ -7,15 +7,12 @@ export interface MetaData {
 }
 
 export interface SuccessResponse {
-  success: true
   data: any[]
   meta?: MetaData
 }
 
 export interface ErrorResponse {
-  success: false
   error: {
     message: string
-    details?: Array<any>
   }
 }

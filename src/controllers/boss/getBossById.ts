@@ -13,24 +13,21 @@ const getBossById = async (
 
     if (!boss) {
       return res.status(404).json({
-        success: false,
         error: {
-          message: 'Boss not found',
+          message: 'Boss bulunamadı.',
         },
       })
     }
 
     res.status(200).json({
-      success: true,
       data: [boss],
     })
   } catch (error) {
     console.error('Error : ', error)
 
     res.status(500).json({
-      success: false,
       error: {
-        message: error instanceof Error ? error.message : 'An unknown error occurred',
+        message: error instanceof Error ? error.message : 'Bilinmeyen bir hata oluştu.',
       },
     })
   }

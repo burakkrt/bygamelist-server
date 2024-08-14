@@ -26,7 +26,6 @@ const getServer = async (
       .exec()
 
     const response: SuccessResponse = {
-      success: true,
       data: servers,
       meta: {
         total,
@@ -42,9 +41,8 @@ const getServer = async (
     console.error('Error : ', error)
 
     res.status(500).json({
-      success: false,
       error: {
-        message: error instanceof Error ? error.message : 'An unknown error occurred',
+        message: error instanceof Error ? error.message : 'Bilinmeyen bir hata oluştu.',
       },
     })
   }

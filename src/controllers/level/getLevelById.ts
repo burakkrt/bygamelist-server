@@ -13,24 +13,21 @@ const getLevelById = async (
 
     if (!level) {
       return res.status(404).json({
-        success: false,
         error: {
-          message: 'Level not found',
+          message: 'Level bulunamadı.',
         },
       })
     }
 
     res.status(200).json({
-      success: true,
       data: [level],
     })
   } catch (error) {
     console.error('Error : ', error)
 
     res.status(500).json({
-      success: false,
       error: {
-        message: error instanceof Error ? error.message : 'An unknown error occurred',
+        message: error instanceof Error ? error.message : 'Bilinmeyen bir hata oluştu.',
       },
     })
   }

@@ -1,19 +1,21 @@
 import { Request, Response } from 'express'
 import { body, validationResult } from 'express-validator'
 import EfsunModel from '../../models/efsunModel'
+import { ErrorResponse, SuccessResponse } from '@/constants/types'
 
 const efsunValidationRules = () => [
   body('name').notEmpty().withMessage('Name is required'),
 ]
 
-const createEfsun = async (req: Request, res: Response) => {
+const createEfsun = async (
+  req: Request,
+  res: Response<SuccessResponse | ErrorResponse>
+) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({
-      success: false,
       error: {
-        message: 'Validation error',
-        details: errors.array(),
+        message: 'Girilen bilgiler eksik veya hatalı.',
       },
     })
   }
@@ -24,8 +26,9 @@ const createEfsun = async (req: Request, res: Response) => {
     const existing = await EfsunModel.findOne({ name })
     if (existing) {
       return res.status(409).json({
-        success: false,
-        message: 'A efsun with this name already exists',
+        error: {
+          message: 'Zaten bu isimde veri mevcut.',
+        },
       })
     }
 
@@ -37,16 +40,14 @@ const createEfsun = async (req: Request, res: Response) => {
     const savedEfsun = await newEfsun.save()
 
     res.status(201).json({
-      success: true,
       data: [savedEfsun],
     })
   } catch (error) {
     console.error('Error : ', error)
 
     res.status(500).json({
-      success: false,
       error: {
-        message: error instanceof Error ? error.message : 'An unknown error occurred',
+        message: error instanceof Error ? error.message : 'Bilinmeyen bir hata oluştu.',
       },
     })
   }

@@ -16,9 +16,8 @@ const loginUser = async (
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({
-      success: false,
       error: {
-        message: 'Validation error',
+        message: 'Girilen bilgiler eksik veya hatalı.',
       },
     })
   }
@@ -29,9 +28,8 @@ const loginUser = async (
     const user = await UserModel.findOne({ email })
     if (!user) {
       return res.status(401).json({
-        success: false,
         error: {
-          message: 'Email or password is incorrect.',
+          message: 'Email veya şifre hatalı.',
         },
       })
     }
@@ -39,9 +37,8 @@ const loginUser = async (
     const isMatch = await user.comparePassword(password)
     if (!isMatch) {
       return res.status(401).json({
-        success: false,
         error: {
-          message: 'Email or password is incorrect.',
+          message: 'Email veya şifre hatalı.',
         },
       })
     }
@@ -51,7 +48,6 @@ const loginUser = async (
     })
 
     const response: SuccessResponse = {
-      success: true,
       data: [
         {
           user: {
@@ -67,12 +63,11 @@ const loginUser = async (
 
     res.status(200).json(response)
   } catch (error) {
-    console.error('Hata : ', error)
+    console.error('Error : ', error)
 
     const response: ErrorResponse = {
-      success: false,
       error: {
-        message: error instanceof Error ? error.message : 'Bilinmeyen bir hata oluştu',
+        message: error instanceof Error ? error.message : 'Bilinmeyen bir hata oluştu.',
       },
     }
 

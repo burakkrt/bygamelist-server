@@ -10,10 +10,8 @@ const updateBoss = async (
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({
-      success: false,
       error: {
-        message: 'Validation error',
-        details: errors.array(),
+        message: 'Girilen bilgiler eksik veya hatalı.',
       },
     })
   }
@@ -32,24 +30,21 @@ const updateBoss = async (
 
     if (!updatedBoss) {
       return res.status(404).json({
-        success: false,
         error: {
-          message: 'Boss not found',
+          message: 'Boss bulunamadı.',
         },
       })
     }
 
     res.status(200).json({
-      success: true,
       data: [updatedBoss],
     })
   } catch (error) {
     console.error('Error : ', error)
 
     res.status(500).json({
-      success: false,
       error: {
-        message: error instanceof Error ? error.message : 'An unknown error occurred',
+        message: error instanceof Error ? error.message : 'Bilinmeyen bir hata oluştu.',
       },
     })
   }

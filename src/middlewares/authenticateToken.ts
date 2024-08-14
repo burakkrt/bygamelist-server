@@ -17,9 +17,8 @@ const authenticateToken = (
 
   if (token == null) {
     return res.status(401).json({
-      success: false,
       error: {
-        message: 'You are not authorized to perform this action.',
+        message: 'Bu işlemi gerçekleştirme yetkiniz yok.',
       },
     })
   }
@@ -27,9 +26,8 @@ const authenticateToken = (
   jwt.verify(token, process.env.JWT_SECRET!, (err, decoded) => {
     if (err) {
       return res.status(403).json({
-        success: false,
         error: {
-          message: 'The token may have expired or be inaccurate.',
+          message: "Token ' in süresi dolmuş veya hatalı olabilir.",
         },
       })
     }

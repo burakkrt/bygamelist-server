@@ -10,10 +10,8 @@ const updateServer = async (
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({
-      success: false,
       error: {
-        message: 'Validation error',
-        details: errors.array(),
+        message: 'Girilen bilgiler eksik veya hatalı.',
       },
     })
   }
@@ -59,24 +57,21 @@ const updateServer = async (
 
     if (!updatedServer) {
       return res.status(404).json({
-        success: false,
         error: {
-          message: 'Server not found',
+          message: 'Sunucu bulunamadı.',
         },
       })
     }
 
     res.status(200).json({
-      success: true,
       data: [updatedServer],
     })
   } catch (error) {
     console.error('Error : ', error)
 
     res.status(500).json({
-      success: false,
       error: {
-        message: error instanceof Error ? error.message : 'An unknown error occurred',
+        message: error instanceof Error ? error.message : 'Bilinmeyen bir hata oluştu.',
       },
     })
   }
