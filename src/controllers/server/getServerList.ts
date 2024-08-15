@@ -3,7 +3,7 @@ import ServerModel from '../../models/serverModel'
 import * as defaultMetas from '../../constants/defaultMetas'
 import { ErrorResponse, SuccessResponse } from '../../constants/types'
 
-const getServer = async (
+const getServerList = async (
   req: Request,
   res: Response<SuccessResponse | ErrorResponse>
 ) => {
@@ -17,21 +17,14 @@ const getServer = async (
     const total = await ServerModel.countDocuments()
 
     const servers = await ServerModel.find()
+      .select('_id level name autoHunt dropClient team openingDate')
       .sort({ [sortField]: sortOrder })
       .limit(pageSize)
       .skip((page - 1) * pageSize)
-      .populate([
-        {
-          path: 'level',
-        },
-        {
-          path: 'bosses',
-        },
-        {
-          path: 'efsunlar',
-        },
-      ])
-
+      .populate({
+        path: 'level',
+        select: 'name -_id',
+      })
       .exec()
 
     const response: SuccessResponse = {
@@ -57,4 +50,4 @@ const getServer = async (
   }
 }
 
-export { getServer }
+export { getServerList }

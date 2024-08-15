@@ -34,7 +34,7 @@ mongoose
     console.log(`Connected to database: ${dbName}`)
 
     // Yönlendirmeler
-    app.use('/v1/server', serverRouter)
+    app.use('/v1/', serverRouter)
     app.use('/v1/level', levelRoute)
     app.use('/v1/user', userRoute)
     app.use('/v1/efsun', efsunRoute)
