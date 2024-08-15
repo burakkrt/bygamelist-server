@@ -6,6 +6,7 @@ const levelSchema = new mongoose.Schema(
       type: String,
       require: true,
       unique: true,
+      default: undefined,
     },
   },
   {

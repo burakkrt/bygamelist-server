@@ -15,22 +15,26 @@ const userSchema = new Schema<IUser>(
     name: {
       type: String,
       required: true,
+      default: undefined,
     },
     surname: {
       type: String,
       required: true,
+      default: undefined,
     },
     password: {
       type: String,
       required: true,
+      default: undefined,
     },
     email: {
       type: String,
       required: true,
+      default: undefined,
     },
     phoneNumber: {
       type: String,
-      default: '',
+      default: undefined,
     },
   },
   {

@@ -6,9 +6,11 @@ const efsunSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+      default: undefined,
     },
     description: {
       type: String,
+      default: undefined,
     },
   },
   {
