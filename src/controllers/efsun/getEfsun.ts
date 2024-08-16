@@ -18,12 +18,14 @@ const getEfsun = async (req: Request, res: Response<SuccessResponse | ErrorRespo
       .limit(pageSize)
       .skip((page - 1) * pageSize)
 
+    const shownDataCount = Math.min(pageSize, efsuns.length)
+
     const response: SuccessResponse = {
       data: efsuns,
       meta: {
         total,
         page,
-        pageSize,
+        pageSize: shownDataCount,
         totalPages: Math.ceil(total / pageSize),
         timestamp: new Date().toISOString(),
       },

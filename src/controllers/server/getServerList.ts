@@ -17,7 +17,7 @@ const getServerList = async (
     const total = await ServerModel.countDocuments()
 
     const servers = await ServerModel.find()
-      .select('_id level name autoHunt dropClient team openingDate')
+      .select('_id level name autoHunt dropClient team openingDate legalSale')
       .sort({ [sortField]: sortOrder })
       .limit(pageSize)
       .skip((page - 1) * pageSize)
@@ -27,12 +27,14 @@ const getServerList = async (
       })
       .exec()
 
+    const shownDataCount = Math.min(pageSize, servers.length)
+
     const response: SuccessResponse = {
       data: servers,
       meta: {
         total,
         page,
-        pageSize,
+        pageSize: shownDataCount,
         totalPages: Math.ceil(total / pageSize),
         timestamp: new Date().toISOString(),
       },

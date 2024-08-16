@@ -34,12 +34,14 @@ const getServer = async (
 
       .exec()
 
+    const shownDataCount = Math.min(pageSize, servers.length)
+
     const response: SuccessResponse = {
       data: servers,
       meta: {
         total,
         page,
-        pageSize,
+        pageSize: shownDataCount,
         totalPages: Math.ceil(total / pageSize),
         timestamp: new Date().toISOString(),
       },

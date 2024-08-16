@@ -18,12 +18,14 @@ const getLevel = async (req: Request, res: Response<SuccessResponse | ErrorRespo
       .limit(pageSize)
       .skip((page - 1) * pageSize)
 
+    const shownDataCount = Math.min(pageSize, levels.length)
+
     const response: SuccessResponse = {
       data: levels,
       meta: {
         total,
         page,
-        pageSize,
+        pageSize: shownDataCount,
         totalPages: Math.ceil(total / pageSize),
         timestamp: new Date().toISOString(),
       },

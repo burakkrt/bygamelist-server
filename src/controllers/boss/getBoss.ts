@@ -18,12 +18,14 @@ const getBoss = async (req: Request, res: Response<SuccessResponse | ErrorRespon
       .limit(pageSize)
       .skip((page - 1) * pageSize)
 
+    const shownDataCount = Math.min(pageSize, bosses.length)
+
     const response: SuccessResponse = {
       data: bosses,
       meta: {
         total,
         page,
-        pageSize,
+        pageSize: shownDataCount,
         totalPages: Math.ceil(total / pageSize),
         timestamp: new Date().toISOString(),
       },
