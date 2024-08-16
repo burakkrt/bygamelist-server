@@ -7,9 +7,9 @@ import { authenticateToken } from '../middlewares/authenticateToken'
 
 const bossRoute = Router()
 
-bossRoute.get('/', getBoss)
-bossRoute.post('/', authenticateToken, bossValidationRules(), createBoss)
-bossRoute.patch('/:id', authenticateToken, bossValidationRules(), updateBoss)
-bossRoute.get('/:id', authenticateToken, getBossById)
+bossRoute.get('/boss', getBoss)
+bossRoute.post('/boss', authenticateToken, bossValidationRules(), createBoss)
+bossRoute.patch('/boss/:id', authenticateToken, bossValidationRules(), updateBoss)
+bossRoute.get('/boss/:id', authenticateToken, getBossById)
 
 export default bossRoute

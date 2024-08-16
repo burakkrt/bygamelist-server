@@ -35,10 +35,10 @@ mongoose
 
     // Yönlendirmeler
     app.use('/v1/', serverRouter)
-    app.use('/v1/level', levelRoute)
-    app.use('/v1/user', userRoute)
-    app.use('/v1/efsun', efsunRoute)
-    app.use('/v1/boss', bossRoute)
+    app.use('/v1/', levelRoute)
+    app.use('/v1/', userRoute)
+    app.use('/v1/', efsunRoute)
+    app.use('/v1/', bossRoute)
 
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`)

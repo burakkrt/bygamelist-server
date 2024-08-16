@@ -7,9 +7,9 @@ import { authenticateToken } from '../middlewares/authenticateToken'
 
 const levelRoute = Router()
 
-levelRoute.get('/', getLevel)
-levelRoute.post('/', authenticateToken, levelValidationRules(), createLevel)
-levelRoute.patch('/:id', authenticateToken, levelValidationRules(), updateLevel)
-levelRoute.get('/:id', authenticateToken, getLevelById)
+levelRoute.get('/level', getLevel)
+levelRoute.post('/level', authenticateToken, levelValidationRules(), createLevel)
+levelRoute.patch('/level/:id', authenticateToken, levelValidationRules(), updateLevel)
+levelRoute.get('/level/:id', authenticateToken, getLevelById)
 
 export default levelRoute
