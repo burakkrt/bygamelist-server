@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { body, validationResult } from 'express-validator'
 import ServerModel from '../../models/serverModel'
-import { ErrorResponse, SuccessResponse } from '../../constants/types'
+import { ErrorResponse, IServerModel, SuccessResponse } from '../../constants/types'
 
 const serverValidationRules = () => [
   body('name').notEmpty().withMessage('Name is required'),
@@ -9,6 +9,7 @@ const serverValidationRules = () => [
   body('openingDate').notEmpty().withMessage('openingDate is required'),
   body('autoHunt').notEmpty().withMessage('autoHunt is required'),
   body('dropClient').notEmpty().withMessage('dropClient is required'),
+  body('status').notEmpty().withMessage('status is required'),
 ]
 
 const createServer = async (
@@ -26,6 +27,7 @@ const createServer = async (
 
   try {
     const {
+      status,
       name,
       level,
       openingDate,
@@ -40,9 +42,14 @@ const createServer = async (
       team,
       efsunlar,
       bosses,
-    } = req.body
+      discord,
+      website,
+      singleStoreyDungeon,
+      ownSalesSystem,
+    } = req.body as IServerModel
 
-    const newServer = new ServerModel({
+    const newServer = new ServerModel<IServerModel>({
+      status,
       name,
       level,
       openingDate,
@@ -57,6 +64,10 @@ const createServer = async (
       team,
       efsunlar,
       bosses,
+      discord,
+      website,
+      singleStoreyDungeon,
+      ownSalesSystem,
     })
 
     const savedServer = await newServer.save()

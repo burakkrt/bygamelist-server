@@ -25,6 +25,11 @@ const teamSchema = new mongoose.Schema({
 
 const serverSchema = new Schema(
   {
+    status: {
+      type: Boolean,
+      required: true,
+      default: undefined,
+    },
     name: {
       type: String,
       required: true,
@@ -93,6 +98,22 @@ const serverSchema = new Schema(
         default: undefined,
       },
     ],
+    discord: {
+      type: String,
+      default: undefined,
+    },
+    website: {
+      type: String,
+      default: undefined,
+    },
+    singleStoreyDungeon: {
+      type: Boolean,
+      default: undefined,
+    },
+    ownSalesSystem: {
+      type: Boolean,
+      default: undefined,
+    },
   },
 
   {
