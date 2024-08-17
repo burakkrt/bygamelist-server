@@ -2,21 +2,50 @@ import { Request, Response } from 'express'
 import ServerModel from '../../models/serverModel'
 import * as defaultMetas from '../../constants/defaultMetas'
 import { ErrorResponse, SuccessResponse } from '../../constants/types'
+import { isValidObjectId } from 'mongoose'
 
 const getServerList = async (
   req: Request,
   res: Response<SuccessResponse | ErrorResponse>
 ) => {
+  const query: { [key: string]: any } = {}
+  const { name, id, status } = req.query
+
   const pageSize =
     parseInt(req.query.pageSize as string) || defaultMetas.DEFAULT_PAGE_SIZE
   const page = parseInt(req.query.page as string) || defaultMetas.DEFAULT_PAGE
   const sortField = req.query.sortField?.toString() || defaultMetas.DEFAULT_SORT_FIELD
   const sortOrder = req.query.sortOrder?.toString() === 'desc' ? -1 : 1
 
-  try {
-    const total = await ServerModel.countDocuments()
+  if (name) {
+    query.name = { $regex: name, $options: 'i' }
+  }
 
-    const servers = await ServerModel.find()
+  if (id && !isValidObjectId(id)) {
+    return res.status(200).json({
+      data: [],
+      meta: {
+        total: 0,
+        page: 1,
+        pageSize: 0,
+        totalPages: 0,
+        timestamp: new Date().toISOString(),
+      },
+    })
+  } else if (id) {
+    query._id = id
+  }
+
+  if (status) {
+    if (status !== 'all') {
+      query.status = status === 'true'
+    }
+  }
+
+  try {
+    const total = await ServerModel.countDocuments(query)
+
+    const servers = await ServerModel.find(query)
       .select('_id level name autoHunt dropClient team openingDate legalSale')
       .sort({ [sortField]: sortOrder })
       .limit(pageSize)
