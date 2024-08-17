@@ -13,5 +13,6 @@ serverRoute.post('/server', authenticateToken, serverValidationRules(), createSe
 serverRoute.patch('/server/:id', authenticateToken, serverValidationRules(), updateServer)
 serverRoute.get('/server/:id', authenticateToken, getServerById)
 serverRoute.get('/serverlist', getServerList)
+serverRoute.get('/serverlist-auth', authenticateToken, getServerList)
 
 export default serverRoute
