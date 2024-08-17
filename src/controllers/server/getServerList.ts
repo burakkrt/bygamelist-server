@@ -21,6 +21,8 @@ const getServerList = async (
     query.name = { $regex: name, $options: 'i' }
   }
 
+  // eğer gelen id değeri objectid türünde değilse hatayı önlemek için
+  // direk boş response döndürüyorum.
   if (id && !isValidObjectId(id)) {
     return res.status(200).json({
       data: [],
