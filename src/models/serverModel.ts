@@ -25,6 +25,11 @@ const teamSchema = new mongoose.Schema({
 
 const serverSchema = new Schema(
   {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      default: undefined,
+    },
     status: {
       type: Boolean,
       required: true,

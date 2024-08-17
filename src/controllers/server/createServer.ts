@@ -10,6 +10,7 @@ const serverValidationRules = () => [
   body('autoHunt').notEmpty().withMessage('autoHunt is required'),
   body('dropClient').notEmpty().withMessage('dropClient is required'),
   body('status').notEmpty().withMessage('status is required'),
+  body('userId').notEmpty().withMessage('userId is required'),
 ]
 
 const createServer = async (
@@ -27,6 +28,7 @@ const createServer = async (
 
   try {
     const {
+      userId,
       status,
       name,
       level,
@@ -49,6 +51,7 @@ const createServer = async (
     } = req.body as IServerModel
 
     const newServer = new ServerModel<IServerModel>({
+      userId,
       status,
       name,
       level,

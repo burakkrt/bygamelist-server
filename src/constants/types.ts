@@ -28,6 +28,7 @@ export interface ITeam {
 }
 
 export interface IServerModel {
+  userId: ObjectId
   status: boolean
   name: string
   level: ObjectId
