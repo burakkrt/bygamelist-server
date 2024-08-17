@@ -18,7 +18,7 @@ const authenticateToken = (
   if (token == null) {
     return res.status(401).json({
       error: {
-        message: 'Bu işlemi gerçekleştirme yetkiniz yok.',
+        message: 'Bu işlemi gerçekleştirmek için yetkiniz yok.',
       },
     })
   }
