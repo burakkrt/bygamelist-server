@@ -16,6 +16,7 @@ export interface SuccessResponse {
 export interface ErrorResponse {
   error: {
     message: string
+    detail?: Array<any> | string
   }
 }
 
@@ -32,12 +33,12 @@ export interface IServerModel {
   status: boolean
   name: string
   level: ObjectId
-  openingDate: Date
+  openingDate: string
   autoHunt: boolean
   autoBoss?: boolean
   battlepass?: boolean
   dropClient: number
-  legalSale?: boolean
+  legalSale: boolean
   dolunayKdp?: boolean
   simya?: boolean
   kuleFarm?: boolean

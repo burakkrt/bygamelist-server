@@ -71,6 +71,7 @@ const serverSchema = new Schema(
     },
     legalSale: {
       type: Boolean,
+      required: true,
       default: undefined,
     },
     dolunayKdp: {

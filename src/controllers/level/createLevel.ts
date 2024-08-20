@@ -16,6 +16,7 @@ const createLevel = async (
     return res.status(400).json({
       error: {
         message: 'Girilen bilgiler eksik veya hatalı.',
+        detail: errors.array(),
       },
     })
   }
