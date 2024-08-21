@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Request, Response, NextFunction } from 'express'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import cors from 'cors'
@@ -7,6 +7,7 @@ import levelRoute from './routes/levelRoute'
 import userRoute from './routes/userRoute'
 import efsunRoute from './routes/efsunRoute'
 import bossRoute from './routes/bossRoute'
+import { ErrorResponse } from './constants/types'
 
 // Ortam değişkenini kontrol et ve doğru .env dosyasını yükle
 const envFile =
@@ -28,17 +29,28 @@ app.use(cors()) // CORS middleware'ini ekle
 app.use(express.json()) // JSON formatındaki gövde verilerini işlemek için
 app.use(express.urlencoded({ extended: true })) // URL encoded verileri işlemek için
 
+// Yönlendirmeler
+app.use('/v1/', serverRouter)
+app.use('/v1/', levelRoute)
+app.use('/v1/', userRoute)
+app.use('/v1/', efsunRoute)
+app.use('/v1/', bossRoute)
+
+// 404 Hata Yakalama Middleware'i
+app.use((req: Request, res: Response<ErrorResponse>, next: NextFunction) => {
+  const errorResponse: ErrorResponse = {
+    error: {
+      message: `İstek başarısız ! "${req.originalUrl}" adresine istek gönderiyorsun fakat bu rotada bir servis yolu bulunmuyor.`,
+    },
+  }
+
+  res.status(404).json(errorResponse)
+})
+
 mongoose
   .connect(mongoUrl)
   .then(() => {
     console.log(`Connected to database: ${dbName}`)
-
-    // Yönlendirmeler
-    app.use('/v1/', serverRouter)
-    app.use('/v1/', levelRoute)
-    app.use('/v1/', userRoute)
-    app.use('/v1/', efsunRoute)
-    app.use('/v1/', bossRoute)
 
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`)
