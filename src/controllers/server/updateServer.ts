@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { validationResult } from 'express-validator'
+import mongoose from 'mongoose'
 import ServerModel from '../../models/serverModel'
 import { ErrorResponse, SuccessResponse } from '../../constants/types'
 
@@ -16,45 +17,22 @@ const updateServer = async (
       },
     })
   }
+
   const { id } = req.params
-  const {
-    name,
-    level,
-    openingDate,
-    autoHunt,
-    autoBoss,
-    battlepass,
-    dropClient,
-    legalSale,
-    dolunayKdp,
-    simya,
-    kuleFarm,
-    team,
-    efsunlar,
-    bosses,
-  } = req.body
+  const updateData = req.body
+
+  if (!mongoose.isValidObjectId(id)) {
+    return res.status(400).json({
+      error: {
+        message: "Geçersiz sunucu ID'si.",
+      },
+    })
+  }
 
   try {
-    const updatedServer = await ServerModel.findByIdAndUpdate(
-      id,
-      {
-        name,
-        level,
-        openingDate,
-        autoHunt,
-        autoBoss,
-        battlepass,
-        dropClient,
-        legalSale,
-        dolunayKdp,
-        simya,
-        kuleFarm,
-        team,
-        efsunlar,
-        bosses,
-      },
-      { new: true }
-    )
+    const updatedServer = await ServerModel.findByIdAndUpdate(id, updateData, {
+      new: true,
+    })
 
     if (!updatedServer) {
       return res.status(404).json({
