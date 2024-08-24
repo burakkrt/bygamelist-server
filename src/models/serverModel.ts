@@ -87,7 +87,7 @@ const serverSchema = new Schema(
       default: undefined,
     },
     team: {
-      type: [teamSchema],
+      type: teamSchema,
       default: undefined,
     },
     efsunlar: [
